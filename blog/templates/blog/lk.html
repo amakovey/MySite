@@ -1,0 +1,71 @@
+{% extends "blog/wrapper.html" %}
+{% block content %}
+<div class="container">
+{% if latest_post %}
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <p class="text-center">
+                <b>Your posts</b>
+            </p>
+        </div>
+    </div>
+    {% for post in latest_post %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a href="{% url 'blog:post' post.id %}">
+                <b>{{ post.title }}</b>
+            </a>
+        </div>
+        <div class="panel-body">
+            {{ post.text }}
+        </div>
+        <p class="text-right">
+            <i>
+            {{ post.author }},
+            {{ post.published_date }}
+            </i>
+        </p>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <p class="text-center">
+                <b>You have no posts</b>
+            </p>
+        </div>
+    </div>
+    {% endif %}
+    {% if comments %}
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <p class="text-center">
+                    <b>Your comments</b>
+                </p>
+            </div>
+        </div>
+    {% for comment in comments %}
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <a href="{% url 'blog:post' comment.title_id %}">
+                <b>{{ comment.text }}</b>
+            </a>
+        </div>
+        <p class="text-right">
+            <i>
+            {{ comment.created_date }}
+            </i>
+        </p>
+    </div>
+    {% endfor %}
+    {% else %}
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <p class="text-center">
+                <b>You have no comments</b>
+            </p>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
